@@ -173,3 +173,5 @@ if(ENABLE_MATLAB OR ENABLE_OCTAVE)
         find_package(Jsonlab REQUIRED)
     endif()
 endif()
+
+set_property(GLOBAL PROPERTY pjsoncpp_include_dirs "${JSONCPP_INCLUDE_DIR}")

@@ -7,7 +7,10 @@ project(Optizelle)
 cmake_minimum_required(VERSION 3.1.3 FATAL_ERROR)
 
 # Compile as third party library (ON) or as a standalone program (OFF)
-set(COMPILE_AS_THIRDPARTY_LIB ON CACHE BOOL "Compile Optizelle as external/3rd party?")
+if(NOT ${CMAKE_PROJECT_NAME} STREQUAL ${PROJECT_NAME})
+    set(COMPILE_AS_THIRDPARTY_LIB ON CACHE BOOL "Compile Optizelle as external/3rd party?")
+    set(BUILD_STATIC_LIB ON CACHE BOOL "Build only static lib")
+endif()
 
 # Put together the complete license
 add_subdirectory(licenses)
