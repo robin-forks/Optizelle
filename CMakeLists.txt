@@ -6,6 +6,9 @@ project(Optizelle)
 # 3.1.3 is what the current bug fix is, so that looks good enough.
 cmake_minimum_required(VERSION 3.1.3 FATAL_ERROR)
 
+# Compile as third party library (ON) or as a standalone program (OFF)
+set(COMPILE_AS_THIRDPARTY_LIB ON CACHE BOOL "Compile Optizelle as external/3rd party?")
+
 # Put together the complete license
 add_subdirectory(licenses)
 
@@ -17,13 +20,18 @@ set(CPACK_GENERATOR "TGZ")
 set(CPACK_PACKAGE_VENDOR "OptimoJoe")
 set(CPACK_PACKAGE_NAME "Optizelle")
 set(CPACK_PACKAGE_VERSION_MAJOR "1")
-set(CPACK_PACKAGE_VERSION_MINOR "2")
-set(CPACK_PACKAGE_VERSION_PATCH "1")
+set(CPACK_PACKAGE_VERSION_MINOR "3")
+set(CPACK_PACKAGE_VERSION_PATCH "0")
 set(CPACK_SOURCE_IGNORE_FILES "${CMAKE_BINARY_DIR}" "${CMAKE_SOURCE_DIR}/.git")
 set(CPACK_PACKAGE_CONTACT "Joseph Young <joe@optimojoe.com>")
 set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Optizelle [op-tuh-zel] is an open source software library designed to solve general purpose nonlinear optimization problems")
 set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_BINARY_DIR}/licenses/LICENSE.txt")
 set(CPACK_PACKAGE_INSTALL_DIRECTORY "Optizelle")
+
+if(COMPILE_AS_THIRDPARTY_LIB)
+    set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_BINARY_DIR}/ext/Optizelle/licenses/LICENSE.txt")
+endif()
+
 if(WIN32)
     set(CPACK_GENERATOR "WIX")
     set(CPACK_WIX_UPGRADE_GUID "9FB8001A-10E0-4FD1-9DC7-4B5415D6676E")
@@ -42,6 +50,10 @@ elseif(APPLE)
     # Make sure to enable this when building a package
     set(CPACK_DRAGNDROP OFF CACHE BOOL "Building a DragNDrop package?")
     if(CPACK_DRAGNDROP)
+        # We need to know the Python version to correctly configure the ReadMe
+        # and plist file
+        find_package(PythonInterp REQUIRED)
+
         # Setup the readme file
         set(README_NAME "src/cmake/DragNDrop/ReadMe.txt")
         configure_file(
@@ -79,12 +91,12 @@ elseif(APPLE)
         fix_macos_lib(gfortran.5 gcc_s.1)
         fix_macos_lib_alt(gfortran.5 z.1)
         fix_macos_lib(quadmath.0 gcc_s.1)
-        fix_macos_lib(blas.3.8.0 gfortran.5)
-        fix_macos_lib(blas.3.8.0 gcc_s.1)
-        fix_macos_lib(blas.3.8.0 quadmath.0)
-        fix_macos_lib(lapack.3.8.0 gfortran.5)
-        fix_macos_lib(lapack.3.8.0 gcc_s.1)
-        fix_macos_lib(lapack.3.8.0 quadmath.0)
+        fix_macos_lib(blas.3.9.0 gfortran.5)
+        fix_macos_lib(blas.3.9.0 gcc_s.1)
+        fix_macos_lib(blas.3.9.0 quadmath.0)
+        fix_macos_lib(lapack.3.9.0 gfortran.5)
+        fix_macos_lib(lapack.3.9.0 gcc_s.1)
+        fix_macos_lib(lapack.3.9.0 quadmath.0)
     endif()
 elseif(UNIX)
     set(CPACK_GENERATOR "TGZ" "RPM" "DEB")
