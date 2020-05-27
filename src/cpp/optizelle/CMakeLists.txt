@@ -25,19 +25,16 @@ add_library(optizelle_static STATIC
     $<TARGET_OBJECTS:optizelle_cpp>)
 set_target_properties(optizelle_static PROPERTIES OUTPUT_NAME optizelle)
 
-add_library(optizelle_shared SHARED
-    $<TARGET_OBJECTS:utility>
-    $<TARGET_OBJECTS:optizelle_cpp>)
-set_target_properties(optizelle_shared PROPERTIES OUTPUT_NAME optizelle)
-target_link_libraries(optizelle_shared
-    ${JSONCPP_LIBRARIES}
-    ${LAPACK_LIBRARIES}
-    ${BLAS_LIBRARIES})
-if(APPLE)
-    set_target_properties(optizelle_shared PROPERTIES INSTALL_RPATH "@loader_path/../share/optizelle/thirdparty/lib")
-elseif(UNIX)
-    set_target_properties(optizelle_shared PROPERTIES INSTALL_RPATH "\$ORIGIN/../share/optizelle/thirdparty/lib")
-endif()
+# add_library(optizelle_shared SHARED
+#     $<TARGET_OBJECTS:utility>
+#     $<TARGET_OBJECTS:optizelle_cpp>)
+# set_target_properties(optizelle_shared PROPERTIES OUTPUT_NAME optizelle)
+target_link_libraries(optizelle_static ${JSONCPP_LIBRARIES} ${LAPACK_LIBRARIES} ${BLAS_LIBRARIES})
+# if(APPLE)
+#     set_target_properties(optizelle_shared PROPERTIES INSTALL_RPATH "@loader_path/../share/optizelle/thirdparty/lib")
+# elseif(UNIX)
+#     set_target_properties(optizelle_shared PROPERTIES INSTALL_RPATH "\$ORIGIN/../share/optizelle/thirdparty/lib")
+# endif()
 
 # Install the headers associated with the library.
 install(FILES
@@ -50,7 +47,7 @@ install(FILES
     DESTINATION include/optizelle)
 install(TARGETS
     optizelle_static
-    optizelle_shared
+    # optizelle_shared
     RUNTIME DESTINATION lib
     LIBRARY DESTINATION lib
     ARCHIVE DESTINATION lib)
