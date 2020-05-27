@@ -13,7 +13,7 @@ set(CMAKE_POSITION_INDEPENDENT_CODE ON PARENT_SCOPE)
 
 # Figure out if we should look for OpenMP
 mark_as_advanced(CLEAR ENABLE_OPENMP)
-set(ENABLE_OPENMP OFF CACHE BOOL "Enable OpenMP?")
+set(ENABLE_OPENMP ON CACHE BOOL "Enable OpenMP?")
 if(ENABLE_OPENMP)
     # If we enable OpenMP, go ahead and make it required and find the
     # library.
@@ -24,7 +24,8 @@ endif()
 
 # Set the Optizelle include directories
 set(OPTIZELLE_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR})
-set(OPTIZELLE_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR} PARENT_SCOPE)
+
+set_property(GLOBAL PROPERTY poptizelle_include_dirs "${OPTIZELLE_INCLUDE_DIRS}")
 
 # Compile the Optizelle core
 add_subdirectory(optizelle)
