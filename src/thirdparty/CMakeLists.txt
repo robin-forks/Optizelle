@@ -174,4 +174,5 @@ if(ENABLE_MATLAB OR ENABLE_OCTAVE)
     endif()
 endif()
 
+# When compiled as third party library, you need to use this var in the root CMakelists.txt
 set_property(GLOBAL PROPERTY pjsoncpp_include_dirs "${JSONCPP_INCLUDE_DIR}")

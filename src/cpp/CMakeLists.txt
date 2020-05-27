@@ -25,6 +25,7 @@ endif()
 # Set the Optizelle include directories
 set(OPTIZELLE_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR})
 
+# When compiled as third party library, you need to use this var in the root CMakelists.txt
 set_property(GLOBAL PROPERTY poptizelle_include_dirs "${OPTIZELLE_INCLUDE_DIRS}")
 
 # Compile the Optizelle core
