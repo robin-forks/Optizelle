@@ -10,6 +10,8 @@ cmake_minimum_required(VERSION 3.1.3 FATAL_ERROR)
 if(NOT ${CMAKE_PROJECT_NAME} STREQUAL ${PROJECT_NAME})
     set(COMPILE_AS_THIRDPARTY_LIB ON CACHE BOOL "Compile Optizelle as external/3rd party?")
     set(BUILD_STATIC_LIB ON CACHE BOOL "Build only static lib")
+    # Tells cmake where to search for Optizelles FindPackage files
+    list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/src/cmake/Modules")
 endif()
 
 # Put together the complete license
@@ -28,12 +30,12 @@ set(CPACK_PACKAGE_VERSION_PATCH "0")
 set(CPACK_SOURCE_IGNORE_FILES "${CMAKE_BINARY_DIR}" "${CMAKE_SOURCE_DIR}/.git")
 set(CPACK_PACKAGE_CONTACT "Joseph Young <joe@optimojoe.com>")
 set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Optizelle [op-tuh-zel] is an open source software library designed to solve general purpose nonlinear optimization problems")
-set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_BINARY_DIR}/licenses/LICENSE.txt")
+# set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_BINARY_DIR}/licenses/LICENSE.txt")
 set(CPACK_PACKAGE_INSTALL_DIRECTORY "Optizelle")
 
-if(COMPILE_AS_THIRDPARTY_LIB)
-    set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_BINARY_DIR}/ext/Optizelle/licenses/LICENSE.txt")
-endif()
+#if(COMPILE_AS_THIRDPARTY_LIB)
+#    set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_BINARY_DIR}/ext/Optizelle/licenses/LICENSE.txt")
+#endif()
 
 if(WIN32)
     set(CPACK_GENERATOR "WIX")
